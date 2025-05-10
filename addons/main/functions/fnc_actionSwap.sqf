@@ -41,8 +41,11 @@ if ((_backpack isEqualTo "") or ([_unit] call FUNC(chestpack)) isEqualTo "") exi
 removeBackpackGlobal _unit;
 
 //add backpack loadout
-private _loadout = [_unit] call CBA_fnc_getLoadout;
-(_loadout select 0) set [5, [_chestpack, _chestpackLoadout]];
+private _loadout = getUnitLoadout _unit;
+private _extendedLoadout = [_unit] call CBA_fnc_getLoadout;
+private _extendedInfo = _extendedLoadout select 1;
+_loadout set [5, [_chestpack, _chestpackLoadout]];
+_extendedLoadout = [_loadout, _extendedInfo];
 [_unit, _loadout] call CBA_fnc_setLoadout;
 if (_shouldSwitchNVGs) then {
     _unit action ["NVGoggles", _unit];
